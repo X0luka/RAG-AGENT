@@ -1,0 +1,17 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/logs/*
+!data/logs/.gitkeep
+data/memory.db
+data/memory.db-journal
+eval/results/*
+!eval/results/.gitkeep
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
