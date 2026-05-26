@@ -52,3 +52,15 @@ class IngestionFailedError(Exception):
 class UnsupportedFileTypeError(Exception):
     """Raised when no loader supports a file extension."""
 
+
+class DocumentNotFoundError(Exception):
+    """Raised when a document or interaction does not exist."""
+
+    def __init__(self, identifier: str) -> None:
+        """Create a not-found error.
+
+        Args:
+            identifier: Missing resource identifier.
+        """
+        self.identifier = identifier
+        super().__init__(f"Resource not found: {identifier}")
