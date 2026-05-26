@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "id": "q001",
+    "question": "What is self-attention?",
+    "ground_truth": "Self-attention, also called intra-attention, relates different positions of a single sequence to compute a representation of that sequence.",
+    "expected_sources": ["sample.pdf"],
+    "difficulty": "easy",
+    "tags": ["transformer", "attention"]
+  },
+  {
+    "id": "q002",
+    "question": "How does scaled dot-product attention compute its output?",
+    "ground_truth": "Scaled dot-product attention computes dot products between queries and keys, scales them by the square root of the key dimension, applies softmax to obtain weights, and uses those weights to combine the values.",
+    "expected_sources": ["sample.pdf"],
+    "difficulty": "medium",
+    "tags": ["transformer", "attention"]
+  },
+  {
+    "id": "q003",
+    "question": "Why does the Transformer use multi-head attention?",
+    "ground_truth": "Multi-head attention lets the model jointly attend to information from different representation subspaces at different positions, instead of using a single attention function.",
+    "expected_sources": ["sample.pdf"],
+    "difficulty": "medium",
+    "tags": ["transformer", "multi-head-attention"]
+  },
+  {
+    "id": "q004",
+    "question": "What are the main components of the Transformer model architecture?",
+    "ground_truth": "The Transformer follows an encoder-decoder architecture using stacked self-attention and point-wise fully connected layers, with multi-head attention, feed-forward networks, residual connections, normalization, and positional encodings.",
+    "expected_sources": ["sample.pdf"],
+    "difficulty": "medium",
+    "tags": ["transformer", "architecture"]
+  },
+  {
+    "id": "q005",
+    "question": "Why are positional encodings needed in the Transformer?",
+    "ground_truth": "Because the Transformer contains no recurrence or convolution, positional encodings are added to token embeddings to provide information about the relative or absolute position of tokens in the sequence.",
+    "expected_sources": ["sample.pdf"],
+    "difficulty": "easy",
+    "tags": ["transformer", "positional-encoding"]
+  }
+]
