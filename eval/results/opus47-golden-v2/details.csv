@@ -1,0 +1,408 @@
+id,question,difficulty,context_recall,context_precision,faithfulness,answer_relevancy,cost_usd,latency_ms,retrieved_sources,answer
+q001,"How many AI agents are documented in the 2025 AI Agent Index, and what is the primary basis for the information collected?",easy,1.0,0.698412698389418,1.0,0.9350652164982377,0.015564,11799,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","## 2025 AI Agent Index: Coverage and Information Basis
+
+The Index documents **30 state-of-the-art AI agents** [source_1].
+
+The information collected is based on two primary sources:
+
+1. **Publicly available information** [source_1]
+2. **Email correspondence with developers** [source_1]
+
+Additionally, the research team used **GPT-5.2 with web search** to screen annotations for potential inaccuracies [source_3], and companies were contacted and given **four weeks to correct annotations** — though only 4 out of 30 provided substantive comments [source_3].
+
+The 30 agents are organized across **three categories**: chat agents, enterprise agents, and browser agents [source_6], and are evaluated across **six information categories**:
+- Legal
+- Technical capabilities
+- Autonomy & control
+- Ecosystem interaction
+- Evaluation
+- Safety [source_2]"
+q002,"What BLEU score did the Transformer big model achieve on the WMT 2014 English-to-French task, and how long did it take to train?",easy,1.0,0.9166666666361111,1.0,0.9876737214310729,0.01443,9412,"[""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf""]","Based on the sources, the Transformer (big) model achieved a BLEU score of **41.8** on the WMT 2014 English-to-French translation task [source_3], establishing a new single-model state-of-the-art at the time [source_2].
+
+Training took **3.5 days** on 8 NVIDIA P100 GPUs (300,000 steps) [source_4]."
+q003,Across what six categories did the 2025 AI Agent Index annotate agents?,medium,1.0,0.9999999999,0.5714285714285714,0.918592764964501,0.014232,6714,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","Based on the 2025 AI Agent Index, agents were annotated across these six categories [source id=""3""]:
+
+1. **Legal** (company and accountability)
+2. **Technical capabilities**
+3. **Autonomy & control**
+4. **Ecosystem interaction**
+5. **Evaluation**
+6. **Safety**
+
+These are also reflected in the Index's column structure, which covers **product overview, company and accountability, technical capabilities and system architecture, autonomy and control, ecosystem interaction, and safety, evaluation, and impact** [source id=""1""]."
+q004,Why did the Transformer authors scale dot products by 1/sqrt(d_k) in scaled dot-product attention?,medium,1.0,0.8333333332916666,0.7058823529411765,0.8303136338920022,0.017493,12240,"[""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf""]","## Reason for Scaling by $\frac{1}{\sqrt{d_k}}$
+
+The scaling is applied to counteract the effect of **dot products growing large in magnitude** for large values of $d_k$. [source_1]
+
+### The Core Problem
+
+When $d_k$ is large, the dot products between queries and keys tend to grow large, which **pushes the softmax function into regions where it has extremely small gradients** — making learning very slow or ineffective. [source_1]
+
+### Mathematical Intuition
+
+Assume the components of query vector $q$ and key vector $k$ are independent random variables with:
+- Mean $= 0$
+- Variance $= 1$
+
+Then their dot product:
+
+$$q \cdot k = \sum_{i=1}^{d_k} q_i k_i$$
+
+has **mean $0$ and variance $d_k$**. [source_3]
+
+So as $d_k$ grows, the variance of the dot product grows proportionally, leading to very large values entering the softmax.
+
+### The Fix
+
+By scaling with $\frac{1}{\sqrt{d_k}}$, the variance is normalized back to 1, keeping the softmax inputs in a reasonable range:
+
+$$\text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+[source_1]
+
+### Why Not Just Use Additive Attention?
+
+Additive attention (using a feed-forward network) does not suffer this problem, and actually **outperforms unscaled dot-product attention for large $d_k$**. However, dot-product attention is much **faster and more space-efficient** due to optimized matrix multiplication — so scaling was preferred as a fix. [source_1]"
+q005,What does the distinction between 'None found' and 'None' mean in the 2025 AI Agent Index annotations?,medium,1.0,0.49999999995,0.6666666666666666,0.9888513614088195,0.016476,12031,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","## Distinction Between ""None found"" and ""None"" in Annotations
+
+The 2025 AI Agent Index uses these two markers with distinct meanings:
+
+- **""None found""** — indicates that the researchers **could not find any public information** on that field. It reflects an absence of evidence, not evidence of absence. [source_2]
+
+- **""None""** — indicates a **confirmed absence**; the feature or information is known to definitively not exist for that agent. [source_2]
+
+There is also a third related marker:
+
+- **""Not applicable""** — used when the field is simply **irrelevant** to the agent in question. [source_2]
+
+And during the annotation process, annotators could also use **""UNSURE""** when information *might* exist somewhere but couldn't be confirmed, and **""TODO""** to flag items for later revisiting. [source_3]
+
+In short, the key distinction is **epistemic**: *""None found""* is an open question (we looked but couldn't confirm), while *""None""* is a closed answer (we confirmed it doesn't exist)."
+q006,How does self-attention compare to recurrent and convolutional layers in terms of sequential operations and maximum path length?,hard,1.0,0.99999999995,1.0,0.6638231783255412,0.018054,14055,"[""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf""]","## Comparison of Layer Types: Sequential Operations & Maximum Path Length
+
+Based on Table 1 from the paper, here is a direct comparison [source_2]:
+
+| Layer Type | Sequential Operations | Maximum Path Length |
+|---|---|---|
+| Self-Attention | $O(1)$ | $O(1)$ |
+| Recurrent | $O(n)$ | $O(n)$ |
+| Convolutional | $O(1)$ | $O(\log_k(n))$ |
+| Self-Attention (restricted) | $O(1)$ | $O(n/r)$ |
+
+### Key Takeaways
+
+**Sequential Operations:**
+- Self-attention connects all positions with a **constant number** of sequentially executed operations $O(1)$, whereas a recurrent layer requires $O(n)$ sequential operations — making recurrent layers inherently harder to parallelize. [source_1]
+- Convolutional layers also achieve $O(1)$ sequential operations, matching self-attention in this regard. [source_2]
+
+**Maximum Path Length:**
+- Self-attention achieves $O(1)$ maximum path length, meaning any two positions can interact directly. This is critical because **shorter paths make it easier to learn long-range dependencies**. [source_1]
+- Recurrent layers require $O(n)$ path length — signals must traverse the entire sequence.
+- Convolutional layers require $O(\log_k(n))$ steps (with dilated convolutions), or a stack of $O(n/k)$ layers for contiguous kernels. [source_3]
+
+> The shorter the path between positions, the easier it is to learn long-range dependencies. [source_1]"
+q007,What patterns did the Index identify regarding China-incorporated AI agents' safety and compliance documentation?,medium,1.0,0.8333333332916666,0.9333333333333333,0.8501275151708173,0.016971,15269,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","## China-Incorporated AI Agents: Safety & Compliance Patterns
+
+The 2025 AI Agent Index identified several notable patterns regarding Chinese AI agents:
+
+### Geographic Concentration
+There are **5 China-incorporated agents** out of 30 total indexed agents, making them the second-largest group after US-incorporated companies (21/30). [source_3]
+
+### Safety Framework Gaps
+Chinese agents typically **lack safety frameworks**, with only **1 out of 5** Chinese agents referencing an AI safety framework — compared to **75–100%** of US and other non-Chinese agents. [source_1][source_3]
+
+### Compliance Standards Gaps
+Similarly, only **1 out of 5** Chinese agents document compliance standards (e.g., SOC 2, ISO 27001), versus much higher rates among US and other developers. [source_1][source_3]
+
+### Important Caveat
+The Index acknowledges that this absence may reflect **documentation gaps rather than actual non-compliance** — Chinese agents may simply not publish this information publicly. [source_1]
+
+### Technical Distinctions
+Chinese agents also show a distinct architectural pattern: they are **more commonly designed with phone-use and computer-use capabilities** (3/5 Chinese agents), clustering around GUI operation. [source_3]
+
+### Methodological Note
+To mitigate blind spots, **two native Chinese speakers** reviewed safety framework coverage, including documentation published only in Mandarin. [source_3]"
+q008,What configuration of multi-head attention did the Transformer authors use (number of heads and per-head dimensions)?,easy,1.0,0.9999999999,1.0,0.9078522609529837,0.016542,10093,"[""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf""]","Based on the paper, the Transformer authors used the following multi-head attention configuration:
+
+- **Number of heads:** $h = 8$ parallel attention heads [source_1]
+- **Per-head key/query dimension:** $d_k = d_{model}/h = 512/8 = 64$ [source_1]
+- **Per-head value dimension:** $d_v = d_{model}/h = 512/8 = 64$ [source_1]
+
+The key design choice here is that by reducing each head's dimension proportionally, the **total computational cost remains similar to single-head attention with full dimensionality** $d_{model} = 512$ [source_1][source_2].
+
+The projection matrices for each head $i$ have shapes:
+
+$$W_i^Q \in \mathbb{R}^{d_{model} \times d_k}, \quad W_i^K \in \mathbb{R}^{d_{model} \times d_k}, \quad W_i^V \in \mathbb{R}^{d_{model} \times d_v}, \quad W^O \in \mathbb{R}^{hd_v \times d_{model}}$$
+
+[source_1]"
+q009,Which agent categories showed the most missing safety/evaluation information according to the Index?,medium,1.0,0.9999999999,0.9230769230769231,0.9088360428699384,0.017208,8755,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","## Missing Safety/Evaluation Information by Agent Category
+
+According to the 2025 AI Agent Index, **enterprise agents** and **browser agents** showed the most missing safety/evaluation information:
+
+| Category | Missing Fields | Percentage Missing |
+|---|---|---|
+| **Enterprise agents** | 69/104 fields | **66%** |
+| **Browser agents** | 24/40 fields | **60%** |
+| **Chat agents** | 42/96 fields | **44%** |
+
+[source_1]
+
+Overall, **135 out of 240 safety-related fields** had no public information available across all agent categories. [source_8]
+
+### Key Patterns Behind the Gaps
+
+- **Enterprise platforms** tend to define safety primarily through compliance and data security (e.g., SOC 2, GDPR) rather than agent-specific evaluations, and often delegate guardrail responsibilities to users rather than documenting built-in protections. [source_7]
+- **25/30 agents** disclose no internal safety results, and **23/30** have no third-party testing information. [source_7]
+- Only **4 agents** (ChatGPT Agent, OpenAI Codex, Claude Code, Gemini 2.5 Computer Use) provide agent-specific system cards. [source_7]"
+q010,"What backend models do most documented AI agents rely on, and which developers run proprietary models?",medium,1.0,0.9999999999666667,0.9230769230769231,0.7032930363198654,0.014825999999999999,11252,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","## Backend Models in AI Agents
+
+### Dominant Foundation Models
+
+Almost all agents in the 2025 AI Agent Index rely on just **three foundation model families**:
+
+- **GPT** (OpenAI)
+- **Claude** (Anthropic)
+- **Gemini** (Google)
+
+[source_4] [source_2]
+
+### Developers Running Proprietary Models
+
+Only two groups operate their own proprietary models:
+
+1. **US-based frontier AI companies** — Anthropic, Google, and OpenAI
+2. **Chinese developers** — who run their own proprietary models rather than relying on the above families
+
+[source_1]
+
+### Enterprise Agent Design
+
+Enterprise agents are typically **model-agnostic**, meaning they can switch between model providers, which may reduce vendor lock-in risks — though this varies by market segment. [source_2]
+
+---
+
+### Key Risk: Concentrated Platform Power
+
+This shared dependency on so few model families creates potential **single points of failure**, including:
+
+- Pricing changes
+- Service outages
+- Safety regressions
+
+[source_2]
+
+On the positive side, this concentration *may simplify evaluation*, since evaluators can focus resources on understanding risks from only a handful of models. [source_2]"
+q011,Why did the Transformer authors choose sinusoidal positional encodings over learned positional embeddings?,medium,1.0,0.8333333332916666,0.8333333333333334,0.9278209606480122,0.018446999999999998,20713,"[""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf""]","## Reasons for Choosing Sinusoidal Positional Encodings
+
+The authors gave two main reasons for preferring sinusoidal positional encodings:
+
+### 1. Potential for Extrapolation
+The sinusoidal version **""may allow the model to extrapolate to sequence lengths longer than the ones encountered during training""** [source_1]. Learned embeddings, by contrast, are tied to the specific positions seen during training.
+
+### 2. Relative Position Representation
+The authors hypothesized that the sinusoidal functions would **""allow the model to easily learn to attend by relative positions""**, since for any fixed offset $k$, $PE_{pos+k}$ can be represented as a linear function of $PE_{pos}$ [source_1].
+
+The specific encoding used is:
+
+$$PE_{(pos,\, 2i)} = \sin\!\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)$$
+$$PE_{(pos,\, 2i+1)} = \cos\!\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)$$
+
+where the wavelengths form a geometric progression from $2\pi$ to $10000 \cdot 2\pi$ [source_1].
+
+### Empirical Validation
+Notably, the choice was not driven by a large performance gap — experiments showed that learned positional embeddings produced **nearly identical results** (base model: 25.8 BLEU vs. 25.7 BLEU with learned embeddings) [source_2][source_5]. The sinusoidal version was ultimately preferred for its theoretical generalization properties."
+q012,"What proportion of AI agents reference established AI safety frameworks, and what are some examples mentioned?",medium,1.0,0.9999999999,1.0,0.9266047687658179,0.015888,11414,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","## AI Safety Framework Adoption Among Indexed Agents
+
+**15 out of 30 agents (50%)** reference established AI safety frameworks. [source_1]
+
+### Examples of Referenced Frameworks
+
+| Framework | Developer |
+|-----------|-----------|
+| Responsible Scaling Policy | Anthropic |
+| Preparedness Framework | OpenAI |
+| Responsible AI Standard | Microsoft |
+
+[source_1]
+
+### Additional Context
+
+- **10/30 agents** have *no* safety framework documentation at all [source_1]
+- Enterprise assurance standards (e.g., SOC 2, ISO 27001, FedRAMP High, ISO/IEC 42001) are more widely adopted than AI-specific safety frameworks [source_1]
+- Only **5/30 agents** have no compliance standards documented [source_1]
+
+### A Note on ""Safety-Washing""
+
+Even among agents that do reference safety frameworks, the Index notes a concern: safety and ethics frameworks tend to remain **high-level**, with empirical evidence required to rigorously assess risk being **selectively disclosed** — a pattern described as a weaker form of *""safety-washing.""* [source_5]"
+q013,What three desiderata motivated the authors' use of self-attention in the Transformer?,medium,1.0,0.9999999999,0.75,0.8238863687428608,0.013758000000000001,8552,"[""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf""]","Based on the paper, the authors considered three desiderata when motivating their use of self-attention [source_1]:
+
+1. **Total computational complexity per layer** — how computationally expensive each layer type is.
+
+2. **Amount of parallelizable computation** — measured by the minimum number of sequential operations required; more parallelism means faster training.
+
+3. **Path length between long-range dependencies** — the shorter the path that forward and backward signals must traverse between any two positions in the network, the easier it is to learn long-range dependencies [source_1]."
+q014,How are robots.txt compliance and web crawling behavior characterized across the documented agents?,medium,1.0,0.8333333332916666,0.9130434782608695,0.8531062943886993,0.020673,18832,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","## Robots.txt Compliance and Web Crawling Behavior
+
+### Overall Compliance Picture
+
+Compliance with robots.txt is notably poor across the documented agents. Only **6/30 agents explicitly state that their crawler bots respect robots.txt** [source_1]. Meanwhile, **16/30 agents provide no clear statement** about robots.txt, CAPTCHA handling, or web access methods at all [source_3].
+
+### Agents Designed to Bypass Restrictions
+
+Many agents — particularly browser-based ones — are explicitly designed to circumvent standard exclusion protocols [source_1]:
+
+- **BrowserUse** actively markets bypassing anti-bot systems and browsing ""like a human"" [source_3]
+- **Perplexity** argues that AI assistants ""work just like a human assistant"" when fetching content on behalf of users, using this to justify ignoring robots.txt restrictions [source_4]
+- Cloudflare documented **Perplexity using undeclared crawlers** with generic signatures to evade blocks, despite publishing official user-agent strings [source_4]
+- **Perplexity Comet** faced legal threats from Amazon for not identifying itself as an agent [source_4]
+
+### Structural Tension
+
+Browser agents face a fundamental challenge: **robots.txt was designed for crawlers, not autonomous actors**, creating a mismatch with agentic behavior [source_4]. Companies justify bypassing these protocols by arguing agents act *directly on behalf of users* and thus shouldn't be subject to scraping restrictions [source_5].
+
+This tension is now being **actively litigated**, with platforms suing AI companies for bypassing technical controls [source_5].
+
+### Potential Paths Forward
+
+- **Allowlisting frameworks** and **cryptographic authentication** are proposed as alternative governance mechanisms [source_5]
+- **ChatGPT Agent** is the only system in the Index to use **cryptographic signing of requests**, making it the sole agent with a verifiable identity mechanism [source_5]
+- The absence of such signing across other agents makes it significantly harder to verify what an agent actually did [source_5]
+
+### Summary
+
+> The overall pattern is one of widespread non-compliance, minimal documentation, and a growing legal and governance crisis around how agentic web access should be regulated."
+q015,"What implications does the 2025 Index identify for policymakers, developers, and researchers respectively?",hard,1.0,0.9999999999,1.0,0.7594214726718678,0.016098,19071,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","## Implications Identified by the 2025 AI Agent Index
+
+The Index identifies distinct implications for three stakeholder groups [source_1]:
+
+### 🏛️ Policymakers
+- Existing **transparency expectations are largely unmet**: most agents lack safety evaluations, disclosure mechanisms, and identity verification
+- This suggests that **voluntary reporting is insufficient** and that **structured requirements may be needed**
+
+### 👩‍💻 Developers
+- The Index identifies concrete gaps that should be addressed through stronger implementation and clearer disclosure, specifically:
+  - **Agent-specific system cards**
+  - **Sandboxing documentation**
+  - **Web conduct policies**
+
+### 🔬 Researchers
+- The Index provides an **empirical baseline** for studying:
+  - Agent transparency
+  - Ecosystem concentration
+  - Accountability fragmentation
+- It also highlights the need for **evaluation frameworks that target agentic behavior** rather than model capabilities alone
+
+---
+
+These implications are reinforced by the broader finding that structural patterns — such as *foundation model concentration*, *accountability fragmentation*, and *capability-safety transparency gaps* — are **unlikely to resolve on their own** and will grow in importance as agent capabilities increase [source_5]."
+q016,What regularization techniques were used to train the Transformer base model?,medium,1.0,0.9999999999,0.9090909090909091,0.9866829823204032,0.015903,12425,"[""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf""]","## Regularization Techniques for the Transformer Base Model
+
+Three types of regularization were employed during training [source_6]:
+
+### 1. Residual Dropout
+Dropout was applied in two places [source_1]:
+- To the **output of each sub-layer**, before it is added to the sub-layer input and normalized
+- To the **sums of the embeddings and positional encodings** in both the encoder and decoder stacks
+
+For the base model, the dropout rate used was $P_{drop} = 0.1$ [source_1].
+
+### 2. Label Smoothing
+A label smoothing value of $\epsilon_{ls} = 0.1$ was employed during training [source_1]. As noted:
+> ""This hurts perplexity, as the model learns to be more unsure, but improves accuracy and BLEU score.""
+
+### 3. Checkpoint Averaging
+For the base models, a single model was obtained by **averaging the last 5 checkpoints**, written at 10-minute intervals [source_2].
+
+---
+
+These techniques together contributed to the base model surpassing all previously published models and ensembles at a fraction of the training cost [source_2]."
+q017,How did the authors mitigate the risk that the Index could be used for 'safety-washing' or to misrepresent agent capabilities?,hard,1.0,0.9999999999,0.7692307692307693,0.625457550241719,0.017319,12721,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","## Mitigating Safety-Washing and Misrepresentation Risks
+
+The authors acknowledged that their documentation of transparency gaps and safety practices could be selectively cited to misrepresent agent capabilities or inappropriately legitimize insufficient safety measures. [source_1]
+
+They employed three specific mitigation strategies:
+
+1. **Distinguishing absence of evidence from evidence of absence** — The Index carefully differentiates between:
+   - **""None found""** → no *public information* was located
+   - **""None""** → confirmed absence of a feature
+   - **""Not applicable""** → the field is irrelevant to that agent [source_1] [source_3]
+
+2. **Providing full context in annotations** — Rather than presenting isolated data points that could be cherry-picked, annotations include complete contextual information to prevent misleading partial citations. [source_1]
+
+3. **Making the complete Index publicly available** — Full public availability enables independent verification, making it harder for any party to selectively misuse findings without the broader context being accessible for scrutiny. [source_1]
+
+It is also worth noting that the authors were alert to a related pattern already observed in the ecosystem: a weaker form of safety-washing where ""safety and ethics frameworks remain high-level and the empirical evidence required to rigorously assess risk is selectively disclosed."" [source_2] This awareness directly informed how they designed their annotation and disclosure approach."
+q018,Compare the documentation frameworks listed in the Index for AI systems with the safety mechanisms described for Anthropic's Claude.,hard,1.0,0.0,0.78125,0.8438604434647682,0.017895,14332,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","## Documentation Frameworks vs. Claude's Safety Mechanisms
+
+### Documentation Frameworks for AI Systems
+
+The Index references a broad ecosystem of frameworks developed to document AI systems, including: [source_6]
+
+- **Datasheets, model cards, system cards, factsheets**
+- **AI nutrition facts, reward reports, ecosystem graphs**
+- **Data provenance cards, eval cards, audit cards, usage cards, safety cases**
+
+Supporting databases include the **Foundation Model Transparency Index**, the **AI Incident Database**, the **AI Safety Index**, and the **AI Risk** [database]. [source_6]
+
+---
+
+### Claude Code's Documented Safety Mechanisms
+
+Claude Code stands out as the **only system among the 30 studied for which information was found across all 8 safety fields**. [source_5]
+
+Its safety mechanisms include:
+
+| Category | Details |
+|---|---|
+| **Technical guardrails** | RL training to refuse malicious instructions; content classifiers for prompt injection; granular permissions; site blocklists; action confirmations for high-risk actions [source_3] |
+| **Architecture** | Read-only by default; higher-impact actions require explicit user approval [source_3] |
+| **Sandboxing** | Filesystem, network, and OS-level enforcement; sandboxed bash tool [source_3] |
+| **Monitoring** | Visible chain-of-thought, context usage statistics, pause/stop controls [source_7] |
+| **Agent-specific system card** | One of only 4 agents with this [source_8] |
+| **Third-party testing** | Documented (one of only 3/30 agents) [source_2] |
+
+---
+
+### Key Comparison
+
+The documentation frameworks represent **aspirational standards** for transparency, but the Index reveals a significant **gap in practice** — most agents selectively disclose safety information, suggesting a weaker form of *""safety-washing.""* [source_4] Claude Code is a notable exception, aligning closely with the comprehensive documentation ideals these frameworks prescribe, particularly through its agent-specific system card and third-party testing — practices absent in **25/30** and **27/30** agents respectively. [source_8]"
+q019,What optimizer and learning rate schedule did the Transformer authors use?,medium,1.0,0.9999999999,1.0,0.8149125018576152,0.016515000000000002,9249,"[""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf"", ""sample.pdf""]","## Optimizer and Learning Rate Schedule
+
+### Optimizer
+The authors used the **Adam optimizer** with the following hyperparameters: [source_1]
+- $\beta_1 = 0.9$
+- $\beta_2 = 0.98$
+- $\epsilon = 10^{-9}$
+
+### Learning Rate Schedule
+The learning rate was varied during training according to the formula: [source_1]
+
+$$\text{lrate} = d_{\text{model}}^{-0.5} \cdot \min(\text{step\_num}^{-0.5},\ \text{step\_num} \cdot \text{warmup\_steps}^{-1.5})$$
+
+This schedule has two phases: [source_1]
+1. **Warmup phase**: The learning rate increases **linearly** for the first `warmup_steps` training steps.
+2. **Decay phase**: After warmup, the learning rate decreases proportionally to the **inverse square root** of the step number.
+
+The authors used **`warmup_steps = 4000`**. [source_1]"
+q020,What process did the Index authors follow for responsible disclosure and engagement with agent developers before publication?,medium,1.0,0.6666666666444444,1.0,0.7796039661833166,0.017439,10676,"[""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf"", ""5The 2025 AI Agent Index.pdf""]","## Responsible Disclosure and Developer Engagement Process
+
+The Index authors followed a structured process for engaging with developers before publication:
+
+1. **Pre-publication review period**: Developers were given **four weeks** to review and correct annotations before the Index was published. [source_1]
+
+2. **Company contact**: Each company with agents in the Index was contacted on **December 12, 2025**, and provided a view-only link to the draft annotations, with corrections invited by **January 11, 2026**. [source_6]
+
+3. **Confidentiality commitment**: The authors committed to maintaining confidentiality of all correspondence, while noting the final database would be released publicly. [source_6]
+
+4. **Ongoing correction mechanism**: Post-publication, a correction form remains available for updates at `https://aiagentindex.mit.edu/feedback`. [source_4]
+
+### Response Rates
+
+Despite the outreach, engagement was limited:
+- Only **23%** of companies offered some form of response at the time of publication. [source_4]
+- Only **4 out of 30** developers provided substantive comments, which were incorporated into the final Index. [source_4]
+
+### Distinguishing Absence of Information
+
+To avoid misrepresentation, the authors carefully distinguished between:
+- **""None found""** — no public information was found
+- **""None""** — confirmed absence of a feature/policy [source_1]"

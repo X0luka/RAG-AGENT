@@ -1,0 +1,13 @@
+{
+  "embedding_model": "text-embedding-3-small",
+  "embedding_provider": "aihubmix",
+  "rerank_model": "rerank-v3.5",
+  "openrouter_primary_model": "anthropic/claude-sonnet-4.6",
+  "chunk_size": 512,
+  "chunk_overlap": 50,
+  "top_k_vector": 30,
+  "top_k_bm25": 30,
+  "top_k_rerank": 8,
+  "rrf_k": 60,
+  "temperature": 0.3
+}

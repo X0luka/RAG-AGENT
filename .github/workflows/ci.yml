@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    env:
+      DEEPSEEK_API_KEY: ci-placeholder
+      OPENROUTER_API_KEY: ci-placeholder
+      AIHUBMIX_API_KEY: ci-placeholder
+      COHERE_API_KEY: ci-placeholder
+      LANGFUSE_PUBLIC_KEY: ci-placeholder
+      LANGFUSE_SECRET_KEY: ci-placeholder
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: uv sync --extra dev
+
+      - name: Lint
+        run: uv run ruff check src ui eval/run_eval.py eval/generate_golden_set.py scripts tests
+
+      - name: Test
+        run: uv run pytest tests/test_chunker.py tests/test_bm25.py tests/test_hybrid.py -v
+
+      - name: Validate golden set JSON
+        run: uv run python -m json.tool eval/golden_set.json >/dev/null
