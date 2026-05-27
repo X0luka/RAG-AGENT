@@ -120,6 +120,7 @@ def _try_ragas(rows: list[dict[str, Any]]) -> tuple[list[dict[str, float]], str]
         _install_ragas_vertexai_compat()
         from ragas import evaluate
         from ragas.metrics import answer_relevancy, context_precision, context_recall, faithfulness
+        from ragas.run_config import RunConfig
         from datasets import Dataset
 
         dataset = Dataset.from_list(
@@ -139,6 +140,7 @@ def _try_ragas(rows: list[dict[str, Any]]) -> tuple[list[dict[str, float]], str]
             metrics=[context_recall, context_precision, faithfulness, answer_relevancy],
             llm=llm,
             embeddings=embeddings,
+            run_config=RunConfig(timeout=300, max_retries=3, max_workers=4),
             raise_exceptions=False,
         )
         dataframe = result.to_pandas()
