@@ -1,0 +1,21 @@
+{
+  "tag": "opus47-golden-v2",
+  "timestamp": "2026-05-27T06:51:26.612146+00:00",
+  "n_questions": 20,
+  "evaluator": "ragas",
+  "metrics": {
+    "context_recall": 1.0,
+    "context_precision": 0.8557539681901654,
+    "faithfulness": 0.8839706630219737,
+    "answer_relevancy": 0.851789302055943
+  },
+  "thresholds": {
+    "context_recall": 0.8,
+    "context_precision": 0.7,
+    "faithfulness": 0.85,
+    "answer_relevancy": 0.8
+  },
+  "thresholds_passed": true,
+  "total_cost_usd": 0.331731,
+  "total_latency_seconds": 1000.1563703099964
+}
