@@ -9,5 +9,42 @@ services:
       - qdrant_storage:/qdrant/storage
     restart: unless-stopped
 
+  api:
+    image: rag-agent-app:latest
+    build:
+      context: .
+    container_name: rag_memory_api
+    env_file:
+      - .env
+    environment:
+      QDRANT_URL: http://qdrant:6333
+    command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - qdrant
+    restart: unless-stopped
+
+  ui:
+    image: rag-agent-app:latest
+    build:
+      context: .
+    container_name: rag_memory_ui
+    env_file:
+      - .env
+    environment:
+      API_BASE: http://api:8000
+      QDRANT_URL: http://qdrant:6333
+    command: streamlit run ui/app.py --server.address=0.0.0.0 --server.port=8501
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - api
+    restart: unless-stopped
+
 volumes:
   qdrant_storage:

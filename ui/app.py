@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import os
 from collections.abc import AsyncIterator, Iterator
 from pathlib import Path
 from typing import Any
@@ -9,7 +10,7 @@ from typing import Any
 import httpx
 import streamlit as st
 
-API_BASE = "http://localhost:8000"
+API_BASE = os.getenv("API_BASE", "http://localhost:8000")
 
 
 def http_client() -> httpx.Client:
