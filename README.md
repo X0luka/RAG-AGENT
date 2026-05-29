@@ -33,3 +33,21 @@ uvicorn src.api.main:app --reload
 # UI
 streamlit run ui/app.py
 ```
+
+## Docker
+
+```bash
+docker compose up --build
+```
+
+- UI: http://localhost:8501
+- API docs: http://localhost:8000/docs
+- Health: http://localhost:8000/health
+- Docker image excludes offline evaluation dependencies such as RAGAS.
+
+## Evaluation
+
+```bash
+uv sync --extra eval
+uv run --extra eval python eval/run_eval.py --help
+```
